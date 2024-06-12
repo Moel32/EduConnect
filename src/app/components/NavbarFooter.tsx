@@ -60,8 +60,8 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
             <Image
               src="/images/EduConnectAppIcon3.png" // Replace with the path to your image
               alt="EduConnect Icon"
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{objectFit:"cover"}}
               quality={100}
               sizes="(max-width: 768px) 100vw, 
                      (max-width: 1200px) 50vw, 

@@ -78,7 +78,7 @@ export default function LoginPage() {
                     {loading ? "Loading..." : "Login"}
                 </button>
                 <p className="mt-4 text-center">
-                    Don't have an account? <Link href="/signup" className="text-indigo-500">Register here</Link>
+                    Don&apos;t have an account? <Link href="/signup" className="text-indigo-500">Register here</Link>
                 </p>
             </div>
         </div>

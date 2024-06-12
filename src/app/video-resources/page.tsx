@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import SearchBar from "../components/SearchBar";
-import youtube from "../api/video-resources/route";
+import youtube from "../utils/youtube";
 import NavbarFooter from '../components/NavbarFooter';
 import VideoList from "../components/VideoList";
 import VideoPreview from '../components/VideoPreview';

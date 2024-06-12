@@ -1,15 +1,12 @@
-import axios from "axios";
+import { NextRequest, NextResponse } from 'next/server';
+import youtube from '../../utils/youtube'; // Adjust the path based on your project structure
 
-const KEY = "AIzaSyD1mJpEU7WO2Z7QyCVFI9a-4el1PcLI61M";
-
-const youtube = axios.create({
-    baseURL: "https://www.googleapis.com/youtube/v3",
-    params: {
-        part: "snippet",
-        maxResults: 10,
-        key: KEY,
-        q: "programming"  // Default query to filter programming-related videos
+export async function GET(request: NextRequest) {
+    try {
+        const response = await youtube.get('/search');
+        return NextResponse.json(response.data);
+    } catch (error) {
+        console.error('Error fetching data from YouTube API', error);
+        return NextResponse.json({ error: 'Error fetching data from YouTube API' }, { status: 500 });
     }
-});
-
-export default youtube;
+}

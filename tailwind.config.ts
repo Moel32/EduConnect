@@ -17,7 +17,6 @@ const config: Config = {
   },
   plugins: [
     require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/line-clamp'),
   ],
 };
 export default config;
