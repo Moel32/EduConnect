@@ -69,7 +69,7 @@ export default function StudyPlanner() {
     <NavbarFooter>
       <div className="flex min-h-screen flex-col items-center p-6 md:p-24">
         <h1 className="text-2xl font-bold mb-3">AI Study Planner</h1>
-        <h2 className="text-sm text-gray-600 mb-6">
+        <h2 className="text-sm text-white mb-6">
           Create your study plan
         </h2>
         <div className="w-full md:w-3/4 lg:w-1/2 flex flex-col gap-3">
@@ -85,6 +85,7 @@ export default function StudyPlanner() {
               {fields.length > 1 && (
                 <button
                   className="w-1/6 md:w-1/12 ml-2 md:ml-0"
+                  arial-label="Add"
                   onClick={() => handleDelete(index)}
                 >
                   <FaRegTrashAlt />
@@ -128,6 +129,7 @@ export default function StudyPlanner() {
                 width={20}
                 height={20}
                 alt="loading"
+                arial-label="Load"
               />
             ) : (
               "Create Study Plan"

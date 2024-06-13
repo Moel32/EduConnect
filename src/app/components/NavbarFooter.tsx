@@ -58,7 +58,7 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
         <div className="flex items-center space-x-4">
           <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden relative ${dropdownOpen ? 'filter blur-lg' : ''}`}>
             <Image
-              src="/images/EduConnectAppIcon3.png" // Replace with the path to your image
+              src="/images/EduConnectAppIcon3.webp" // Replace with the path to your image
               alt="EduConnect Icon"
               fill
               style={{objectFit:"cover"}}

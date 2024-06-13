@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import LoadingSpinner from '../../../public/loading-spinner.png';
+import LoadingSpinner from '../../../public/loading-spinner.webp';
 
 const LoadingPage = () => {
   return (
@@ -9,9 +9,11 @@ const LoadingPage = () => {
         className="animate-spin h-12 w-12"
         src={LoadingSpinner}
         alt="Loading Spinner"
+        priority={false} // {false} | {true}
       />
     </div>
   );
 };
 
 export default LoadingPage;
+

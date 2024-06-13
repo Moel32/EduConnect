@@ -47,7 +47,7 @@ const FlashcardPage: React.FC = () => {
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div className="w-full max-w-screen-xl p-4">
           <h1 className="text-4xl font-bold mb-4 text-center">Flashcards</h1>
-          <h2 className="text-sm text-gray-600 mb-6 text-center">
+          <h2 className="text-sm text-white mb-6 text-center">
             Create your flashcards
           </h2>
           <FlashcardForm onSave={handleSave} initialData={editingFlashcard} />

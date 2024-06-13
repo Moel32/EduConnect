@@ -1,14 +1,15 @@
 "use client";
 import React, { useState, useEffect, lazy, Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import NavbarFooter from "./components/NavbarFooter";
 import { useRouter } from 'next/navigation';
 import LoadingPage from './components/LoadingPage';
 import axios from 'axios';
 
+const LazyCommentSection = dynamic(() => import('./components/CommentSection'), {
+    suspense: true,
+});
 
-const LazyCommentSection = lazy(() => import('./components/CommentSection'));
-
-// Define the User interface
 interface User {
     _id: string;
     username: string;
@@ -20,10 +21,11 @@ interface User {
 
 function Home() {
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<User | null>(null); // Provide the User interface or type here
+    const [user, setUser] = useState<User | null>(null);
     const [comment, setComment] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const router = useRouter();
+    const [isParagraphVisible, setIsParagraphVisible] = useState(false);
 
     const handleSubmit = async () => {
         try {
@@ -48,6 +50,11 @@ function Home() {
         };
 
         fetchUser();
+
+        // Delay showing the paragraph to avoid it being LCP
+        setTimeout(() => {
+            setIsParagraphVisible(true);
+        }, 2000); // Adjust timing as needed
     }, []);
 
     if (loading) {
@@ -60,7 +67,9 @@ function Home() {
                 {/* Main content */}
                 <div className="text-center">
                     <h1 className="text-3xl font-bold mb-8">Welcome to EduConnect, {user && user.username}!</h1>
-                    <p className="text-lg mb-8 mx-auto text-center">EduConnect is a platform designed to help students study efficiently with the available resources it offers you. Below are features that would assist you during your self-studying.</p>
+                    {isParagraphVisible && (
+                        <p className="text-sm mb-8 mx-auto text-center">EduConnect is a platform designed to help students study efficiently with the available resources it offers you. Below are features that would assist you during your self-studying.</p>
+                    )}
                     <h2 className="text-center text-3xl font-bold mb-8 underline decoration-4 decoration-dotted decoration-yellow-500">Features</h2>
                 </div>
 

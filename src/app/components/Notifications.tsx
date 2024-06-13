@@ -43,7 +43,7 @@ export default function Notifications() {
 
   return (
     <div className="relative">
-      <button onClick={toggleNotifications} className="hover:text-purple-300 focus:outline-none">
+      <button onClick={toggleNotifications} className="hover:text-purple-300 focus:outline-none"  arial-label="Notification">
         <i className="fas fa-bell"></i> {/* Notification icon */}
         {notifications.some((notification) => !notification.read) && (
           <span className="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">

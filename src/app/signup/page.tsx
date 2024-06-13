@@ -41,7 +41,7 @@ export default function SignupPage() {
     }, [user]);
 
     return (
-        <div className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center py-2" style={{ backgroundImage: "url('images/registration.jpg')" }}>
+        <div className="relative flex flex-col items-center justify-center min-h-screen bg-cover bg-center py-2" style={{ backgroundImage: "url('images/registration.webp')" }}>
             <InternetCheckComponent />
             <div className="absolute inset-0 bg-black opacity-50"></div>
             <div className="relative z-10 p-8 bg-white bg-opacity-90 rounded-lg shadow-lg max-w-md w-full mx-4 sm:mx-auto">
@@ -49,7 +49,7 @@ export default function SignupPage() {
                 <hr className="mb-4" />
                 <form className="space-y-4">
                     <div>
-                        <label htmlFor="username" className="block text-gray-700">Username</label>
+                        <label htmlFor="username" className="block text-gray-700 text-sm">Username</label>
                         <input
                             className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-indigo-500"
                             id="username"
@@ -60,7 +60,7 @@ export default function SignupPage() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="specialization" className="block text-gray-700">Current Specialization</label>
+                        <label htmlFor="specialization" className="block text-gray-700 text-sm">Current Specialization</label>
                         <input
                             className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-indigo-500"
                             id="specialization"
@@ -71,7 +71,7 @@ export default function SignupPage() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="email" className="block text-gray-700">Email</label>
+                        <label htmlFor="email" className="block text-gray-700 text-sm">Email</label>
                         <input
                             className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-indigo-500"
                             id="email"
@@ -82,7 +82,7 @@ export default function SignupPage() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-gray-700">Password</label>
+                        <label htmlFor="password" className="block text-gray-700 text-sm">Password</label>
                         <input
                             className="w-full px-3 py-2 rounded border border-gray-300 focus:outline-none focus:border-indigo-500"
                             id="password"
@@ -100,10 +100,11 @@ export default function SignupPage() {
                 >
                     {loading ? "Loading..." : "Signup"}
                 </button>
-                <p className="mt-4 text-center">
+                <p className="mt-4 text-center text-sm">
                     Already have an account? <Link href="/login" className="text-indigo-500">Login here</Link>
                 </p>
             </div>
         </div>
     );
 }
+

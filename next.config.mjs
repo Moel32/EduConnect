@@ -8,7 +8,12 @@ import {
 const nextConfig = {
   reactStrictMode: true,
   images: {
-      domains: ['i.ytimg.com'], // Add i.ytimg.com to the list of allowed domains
+      remotePatterns: [
+        {  
+          protocol: 'https',      
+          hostname: 'i.ytimg.com'
+      },      
+    ], // Add i.ytimg.com to the list of allowed domains
   },
 };
 

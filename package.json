@@ -21,6 +21,7 @@
     "express": "^4.19.2",
     "google-auth-library": "^9.10.0",
     "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.7.0",
     "mongoose": "^8.3.3",
     "next": "14.1.4",
     "nodemailer": "^6.9.13",

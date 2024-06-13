@@ -1,6 +1,7 @@
 import { shuffleArray } from "../utils/arrayUtils";
 import Quiz from "./Quiz";
 import { Difficulty, QuestionsState, Question } from "../types/quiz";
+import Link from "next/link";
 
 const TOTAL_QUESTIONS = 10;
 
@@ -33,8 +34,11 @@ const QuizPage = async () => {
     } catch (error) {
         // Handle error here, such as displaying a message to the user or logging it
         console.error('Error loading quiz page:', error);
-        return <div>Error loading quiz page. Please try again later.</div>;
+        return <div className="absolute justify-center items-center">
+         <Link href="/" className="block px-4 py-2 hover:bg-purple-200 rounded text-purple-900">Go back Home</Link></div>;
     }
 };
 
 export default QuizPage;
+
+
