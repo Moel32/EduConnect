@@ -8,6 +8,8 @@ import { QuestionsState } from '../types/quiz';
 import NavbarFooter from "../components/NavbarFooter";
 import QuestionCard from "../components/QuestionCard/QuestionCard";
 import LoadingPage from '../components/LoadingPage'; // Import the LoadingPage component
+import Image from 'next/image'; // Import the Image component from Next.js
+import quizImage from '../../../public/images/taking-quiz.webp'; // Placeholder for the circular image
 import InternetCheckComponent from "../components/InternetCheck"; // Adjust the import path as necessary
 
 type Props = {
@@ -84,32 +86,42 @@ const Quiz = ({ questions, totalQuestions }: Props) => {
                     numberOfPieces={1000}
                     tweenDuration={5000}
                 />
-                <div className="text-white text-center p-8">
-                    <h1 className="text-2xl font-bold mb-4">Congratulations!</h1>
-                    <p className="text-xl">You have completed the quiz.</p>
-                    <p className="text-xl">Your score is: {score} / {totalQuestions}</p>
-                    {failedQuestions.length > 0 && (
-                        <div>
-                            <p className="text-xl mt-4">You failed the following questions:</p>
-                            <ul className="list-disc text-left">
-                                {failedQuestions.map((index, i) => (
-                                    <li key={i}>
-                                        <span className="text-yellow-500">
-                                            {questions[index].question.replace(/[^\w\s]/gi, '')}
-                                        </span> - Correct Answer: <span className="text-green-500">{questions[index].correct_answer.replace(/[^\w\s]/gi, '')}</span>
-                                    </li>
-                                ))}
-                            </ul>
+                <div className="flex flex-col items-center justify-center text-white text-center h-screen">
+                    <div className="p-8">
+                        <div className="relative w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
+                            <Image 
+                                src={quizImage} 
+                                alt="Quiz Icon" 
+                                layout="fill" 
+                                objectFit="cover" 
+                            />
                         </div>
-                    )}
-                    <div className="flex justify-center space-x-4 mt-8">
-                        <Button text="Restart Quiz" onClick={() => {
-                            setCurrentQuestionIndex(0);
-                            setScore(0);
-                            setUserAnswers({});
-                            setFailedQuestions([]);
-                        }} />
-                        <Button text="End Quiz" onClick={() => router.push('/')} />
+                        <p className="font-bold text-2xl mb-4">Congratulations!</p>
+                        <p className="text-xl">You have completed the quiz.</p>
+                        <p className="text-xl">Your score is: {score} / {totalQuestions}</p>
+                        {failedQuestions.length > 0 && (
+                            <div>
+                                <p className="text-xl mt-4">You failed the following questions:</p>
+                                <ul className="list-disc text-left">
+                                    {failedQuestions.map((index, i) => (
+                                        <li key={i}>
+                                            <span className="text-yellow-500">
+                                                {questions[index].question.replace(/[^\w\s]/gi, '')}
+                                            </span> - Correct Answer: <span className="text-green-500">{questions[index].correct_answer.replace(/[^\w\s]/gi, '')}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                        <div className="flex justify-center space-x-4 mt-8">
+                            <Button text="Restart Quiz" onClick={() => {
+                                setCurrentQuestionIndex(0);
+                                setScore(0);
+                                setUserAnswers({});
+                                setFailedQuestions([]);
+                            }} />
+                            <Button text="End Quiz" onClick={() => router.push('/')} />
+                        </div>
                     </div>
                 </div>
             </NavbarFooter>
@@ -119,29 +131,39 @@ const Quiz = ({ questions, totalQuestions }: Props) => {
     return (
         <NavbarFooter>
             <InternetCheckComponent />
-            <div className="text-white text-center">
-                <p className="p-8 font-bold text-[20px]">Score: {score}</p>
-                <p className="text-[#9f50ac] font-bold pb-2 text-[14px]">
-                    Question {currentQuestionIndex + 1} out of {totalQuestions}
-                </p>
-                {questions[currentQuestionIndex] ? (
-                    <QuestionCard
-                        currentQuestionIndex={currentQuestionIndex}
-                        question={questions[currentQuestionIndex].question}
-                        answers={questions[currentQuestionIndex].answers}
-                        userAnswer={userAnswers[currentQuestionIndex]}
-                        correctAnswer={questions[currentQuestionIndex].correct_answer}
-                        onClick={handleOnAnswerClick}
-                    />
-                ) : (
-                    <div className="text-white text-center p-8">Question not found</div>
-                )}
-                <div className="flex justify-between mt-18">
-                    <Button text="Prev" onClick={() => handleChangeQuestion(-1)} />
-                    <Button
-                        text={currentQuestionIndex === totalQuestions - 1 ? 'End' : 'Next'}
-                        onClick={currentQuestionIndex == totalQuestions - 1 ? () => setCurrentQuestionIndex(totalQuestions) : () => handleChangeQuestion(1)}
-                    />
+            <div className="flex flex-col items-center justify-center text-white text-center h-screen">
+                <div className="p-8">
+                    <div className="relative w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
+                        <Image 
+                            src={quizImage} 
+                            alt="Quiz Icon" 
+                            layout="fill" 
+                            objectFit="cover" 
+                        />
+                    </div>
+                    <p className="font-bold text-[20px]">Score: {score}</p>
+                    <p className="text-[#9f50ac] font-bold pb-2 text-[14px]">
+                        Question {currentQuestionIndex + 1} out of {totalQuestions}
+                    </p>
+                    {questions[currentQuestionIndex] ? (
+                        <QuestionCard
+                            currentQuestionIndex={currentQuestionIndex}
+                            question={questions[currentQuestionIndex].question}
+                            answers={questions[currentQuestionIndex].answers}
+                            userAnswer={userAnswers[currentQuestionIndex]}
+                            correctAnswer={questions[currentQuestionIndex].correct_answer}
+                            onClick={handleOnAnswerClick}
+                        />
+                    ) : (
+                        <div className="text-white text-center p-8">Question not found</div>
+                    )}
+                    <div className="flex justify-between mt-18">
+                        <Button text="Prev" onClick={() => handleChangeQuestion(-1)} />
+                        <Button
+                            text={currentQuestionIndex === totalQuestions - 1 ? 'End' : 'Next'}
+                            onClick={currentQuestionIndex === totalQuestions - 1 ? () => setCurrentQuestionIndex(totalQuestions) : () => handleChangeQuestion(1)}
+                        />
+                    </div>
                 </div>
             </div>
         </NavbarFooter>
