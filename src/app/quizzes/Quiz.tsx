@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
+import Confetti from 'react-confetti';
 import Button from "../components/Button/Button";
 import { QuestionsState } from '../types/quiz';
 import NavbarFooter from "../components/NavbarFooter";
@@ -59,6 +60,12 @@ const Quiz = ({ questions, totalQuestions }: Props) => {
         return () => clearTimeout(timer);
     }, [questions]);
 
+    useEffect(() => {
+        if (currentQuestionIndex >= totalQuestions) {
+            localStorage.setItem('latestQuizScore', JSON.stringify({ score, totalQuestions }));
+        }
+    }, [currentQuestionIndex, totalQuestions, score]);
+
     if (loading) {
         return <LoadingPage />;
     }
@@ -70,6 +77,13 @@ const Quiz = ({ questions, totalQuestions }: Props) => {
     if (currentQuestionIndex >= totalQuestions) {
         return (
             <NavbarFooter>
+                <Confetti
+                    width={window.innerWidth}
+                    height={window.innerHeight}
+                    recycle={false}
+                    numberOfPieces={1000}
+                    tweenDuration={5000}
+                />
                 <div className="text-white text-center p-8">
                     <h1 className="text-2xl font-bold mb-4">Congratulations!</h1>
                     <p className="text-xl">You have completed the quiz.</p>
@@ -80,7 +94,9 @@ const Quiz = ({ questions, totalQuestions }: Props) => {
                             <ul className="list-disc text-left">
                                 {failedQuestions.map((index, i) => (
                                     <li key={i}>
-                                        <span className="text-yellow-500">{questions[index].question}</span> - Correct Answer: <span className="text-green-500">{questions[index].correct_answer}</span>
+                                        <span className="text-yellow-500">
+                                            {questions[index].question.replace(/[^\w\s]/gi, '')}
+                                        </span> - Correct Answer: <span className="text-green-500">{questions[index].correct_answer.replace(/[^\w\s]/gi, '')}</span>
                                     </li>
                                 ))}
                             </ul>

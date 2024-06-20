@@ -6,6 +6,7 @@ import NavbarFooter from "./components/NavbarFooter";
 import { useRouter } from 'next/navigation';
 import LoadingPage from './components/LoadingPage';
 import axios from 'axios';
+import CircularProgress from './components/CircularProgress'; // Adjust the path as necessary
 
 const LazyCommentSection = dynamic(() => import('./components/CommentSection'), {
     suspense: true,
@@ -25,6 +26,7 @@ function Home() {
     const [user, setUser] = useState<User | null>(null);
     const [comment, setComment] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [latestScore, setLatestScore] = useState<{ score: number, totalQuestions: number } | null>(null);
     const router = useRouter();
     const [isParagraphVisible, setIsParagraphVisible] = useState(false);
 
@@ -52,6 +54,11 @@ function Home() {
 
         fetchUser();
 
+        const savedScore = localStorage.getItem('latestQuizScore');
+        if (savedScore) {
+            setLatestScore(JSON.parse(savedScore));
+        }
+
         // Delay showing the paragraph to avoid it being LCP
         setTimeout(() => {
             setIsParagraphVisible(true);
@@ -76,6 +83,9 @@ function Home() {
                     <button className="w-60 h-16 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-8 cursor-pointer hover:bg-purple-200 transition duration-300 text-white font-bold italic text-xl" onClick={() => router.push("/video-resources")}>
                         Explore Video Resources
                     </button>
+                    {latestScore && (
+                        <CircularProgress score={latestScore.score} totalQuestions={latestScore.totalQuestions} />
+                    )}
                 </div>
 
                 {/* Lazy loaded Comment section */}
