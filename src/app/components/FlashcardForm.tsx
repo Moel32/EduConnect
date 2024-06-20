@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { useState, useEffect } from 'react';
 import { Flashcard } from '../../models/flashcard';
 import { v4 as uuidv4 } from 'uuid';
@@ -64,7 +65,7 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({ onSave, initialData }) =>
           placeholder="Question"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          className={`border p-2 w-full text-black ${questionError ? 'border-red-500' : ''}`}
+          className={`border p-2 w-full text-black rounded-md ${questionError ? 'border-red-500' : ''}`}
         />
         {questionError && <p className="text-red-500 text-sm mt-1">{questionError}</p>}
       </div>
@@ -74,7 +75,7 @@ const FlashcardForm: React.FC<FlashcardFormProps> = ({ onSave, initialData }) =>
           placeholder="Answer"
           value={answer}
           onChange={(e) => setAnswer(e.target.value)}
-          className={`border p-2 w-full text-black ${answerError ? 'border-red-500' : ''}`}
+          className={`border p-2 w-full text-black rounded-md ${answerError ? 'border-red-500' : ''}`}
         />
         {answerError && <p className="text-red-500 text-sm mt-1">{answerError}</p>}
       </div>

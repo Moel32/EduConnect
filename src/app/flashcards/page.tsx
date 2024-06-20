@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from 'react';
 import FlashcardForm from '../components/FlashcardForm';
 import { Flashcard } from '../../models/flashcard';
@@ -6,6 +7,8 @@ import { getFlashcards, deleteFlashcard } from '../utils/localStorage';
 import NavbarFooter from '../components/NavbarFooter';
 import Button from '../components/Button/FlashcardButton';
 import LoadingPage from '../components/LoadingPage'; // Import the LoadingPage component
+import Image from 'next/image'; // Import the Image component from Next.js
+import flashcardImage from '../../../public/images/flashcard-image.webp'; // Placeholder for the flashcard image
 
 const FlashcardPage: React.FC = () => {
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
@@ -17,6 +20,11 @@ const FlashcardPage: React.FC = () => {
     setLoading(true); // Set loading state to true when fetching flashcards
     setFlashcards(getFlashcards());
     setLoading(false); // Set loading state to false after fetching flashcards
+
+    // Register service worker for offline caching
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js');
+    }
   }, []);
 
   const handleSave = (flashcard: Flashcard) => {
@@ -45,10 +53,18 @@ const FlashcardPage: React.FC = () => {
   return (
     <NavbarFooter>
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <div className="w-full max-w-screen-xl p-4">
-          <h1 className="text-4xl font-bold mb-4 text-center">Flashcards</h1>
-          <h2 className="text-sm text-white mb-6 text-center">
-            Create your flashcards
+        <div className="w-full max-w-screen-xl p-4 text-center">
+          <div className="relative w-28 h-28 rounded-full overflow-hidden mx-auto mb-4">
+            <Image 
+              src={flashcardImage} 
+              alt="Flashcard Icon" 
+              layout="fill" 
+              objectFit="cover" 
+            />
+          </div>
+          <h1 className="text-4xl font-bold mb-4">Flashcards</h1>
+          <h2 className="text-sm text-white mb-6">
+            Flashcards are a powerful tool for learning and memorization. Create custom flashcards to help reinforce your knowledge and improve your memory recall.
           </h2>
           <FlashcardForm onSave={handleSave} initialData={editingFlashcard} />
           {loading ? (
