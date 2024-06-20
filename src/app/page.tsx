@@ -3,7 +3,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import NavbarFooter from "./components/NavbarFooter";
-import BottomNavigation from "./components/BottomNavigation"; // Import the BottomNavigation component
 import { useRouter } from 'next/navigation';
 import LoadingPage from './components/LoadingPage';
 import axios from 'axios';
@@ -64,35 +63,32 @@ function Home() {
     }
 
     return (
-        <>
-            <NavbarFooter>
-                <div className="container mx-auto px-4 py-12">
-                    {/* Main content */}
-                    <div className="text-center">
-                        <h1 className="text-3xl font-bold mb-8">Welcome to EduConnect, {user && user.username}!</h1>
-                        {isParagraphVisible && (
-                            <p className="text-sm mb-8 mx-auto text-center max-w-2xl">
-                                EduConnect is a platform designed to help students study efficiently with the available resources it offers. Dive into a plethora of engaging video resources, participate in quizzes, utilize flashcards, and plan your studies with our AI Study Planner.
-                            </p>
-                        )}
-                        <button className="w-60 h-16 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-8 cursor-pointer hover:bg-purple-200 transition duration-300 text-white font-bold italic text-xl" onClick={() => router.push("/video-resources")}>
-                            Explore Video Resources
-                        </button>
-                    </div>
-
-                    {/* Lazy loaded Comment section */}
-                    <Suspense fallback={<LoadingPage />}>
-                        <LazyCommentSection
-                            comment={comment}
-                            setComment={setComment}
-                            handleSubmit={handleSubmit}
-                            successMessage={successMessage}
-                        />
-                    </Suspense>
+        <NavbarFooter>
+            <div className="container mx-auto px-4 py-12">
+                {/* Main content */}
+                <div className="text-center">
+                    <h1 className="text-3xl font-bold mb-8">Welcome to EduConnect, {user && user.username}!</h1>
+                    {isParagraphVisible && (
+                        <p className="text-sm mb-8 mx-auto text-center max-w-2xl">
+                            EduConnect is a platform designed to help students study efficiently with the available resources it offers. Dive into a plethora of engaging video resources, participate in quizzes, utilize flashcards, and plan your studies with our AI Study Planner.
+                        </p>
+                    )}
+                    <button className="w-60 h-16 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-8 cursor-pointer hover:bg-purple-200 transition duration-300 text-white font-bold italic text-xl" onClick={() => router.push("/video-resources")}>
+                        Explore Video Resources
+                    </button>
                 </div>
-            </NavbarFooter>
-            <BottomNavigation /> {/* Add the BottomNavigation component */}
-        </>
+
+                {/* Lazy loaded Comment section */}
+                <Suspense fallback={<LoadingPage />}>
+                    <LazyCommentSection
+                        comment={comment}
+                        setComment={setComment}
+                        handleSubmit={handleSubmit}
+                        successMessage={successMessage}
+                    />
+                </Suspense>
+            </div>
+        </NavbarFooter>
     );
 }
 
