@@ -13,7 +13,7 @@ const client = new TextServiceClient({
   authClient: auth,
 });
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const json = await request.json();
     console.log(json.days);

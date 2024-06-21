@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { FaPlusSquare, FaRegTrashAlt } from "react-icons/fa";
 import Image from "next/image";
@@ -6,16 +7,18 @@ import LoadingPage from '../components/LoadingPage'; // Import the LoadingPage c
 import { StudyPlanObject } from "@/app/types/types";
 import Table from "../components/Table";
 import NavbarFooter from "../components/NavbarFooter";
+import quizImage from '../../../public/images/study-plan.webp'; // Placeholder for the circular image
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 const buttonClass =
   "text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2";
-  
 
 export default function StudyPlanner() {
   const [fields, setFields] = useState<string[]>([""]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [plan, setPlan] = useState<StudyPlanObject[]>([]);
+  const [plan, setPlan] = useLocalStorage<StudyPlanObject[]>('studyPlan', []);
   const [days, setDays] = useState<string>("1");
+  const [error, setError] = useState<string | null>(null);
 
   const handleField = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -32,6 +35,7 @@ export default function StudyPlanner() {
 
   const fetchStudyPlan = async () => {
     setLoading(true);
+    setError(null);
     const topics = fields.join(" ");
     const data = {
       topics,
@@ -51,9 +55,11 @@ export default function StudyPlanner() {
         setPlan(JSON.parse(responseData));
       } else {
         console.error(responseData);
+        setError("Failed to create study plan. Please try again.");
       }
     } catch (error) {
       console.log(error);
+      setError("An error occurred. Please reload the page and try again.");
     }
     setLoading(false);
   };
@@ -63,15 +69,31 @@ export default function StudyPlanner() {
     f.splice(index, 1);
     setFields(f);
   };
-  
 
   return (
     <NavbarFooter>
       <div className="flex min-h-screen flex-col items-center p-6 md:p-24">
+        <div className="relative w-50 h-50 rounded-full overflow-hidden mx-auto mb-4">
+          <Image 
+            src={quizImage} 
+            alt="Study Planner Icon" 
+            layout="fill" 
+            objectFit="cover" 
+            onError={() => setError("Failed to load image. Please reload the page.")}
+          />
+        </div>
         <h1 className="text-2xl font-bold mb-3">AI Study Planner</h1>
         <h2 className="text-sm text-white mb-6">
-          Create your study plan
+          Easily create a comprehensive study plan tailored to your needs and study preferences.
         </h2>
+        {error && (
+          <div className="text-red-500 mb-4">
+            {error} 
+            <button onClick={() => window.location.reload()} className="underline ml-2">
+              Reload
+            </button>
+          </div>
+        )}
         <div className="w-full md:w-3/4 lg:w-1/2 flex flex-col gap-3">
           {fields.map((field, index) => (
             <div key={index} className="w-full flex items-center">
@@ -85,7 +107,7 @@ export default function StudyPlanner() {
               {fields.length > 1 && (
                 <button
                   className="w-1/6 md:w-1/12 ml-2 md:ml-0"
-                  arial-label="Add"
+                  arial-label="Delete"
                   onClick={() => handleDelete(index)}
                 >
                   <FaRegTrashAlt />
@@ -119,7 +141,6 @@ export default function StudyPlanner() {
                 return options;
               })()}
             </select>
-
           </label>
           <button className={buttonClass} onClick={fetchStudyPlan}>
             {loading ? (

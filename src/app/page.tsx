@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import NavbarFooter from "./components/NavbarFooter";
@@ -7,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import LoadingPage from './components/LoadingPage';
 import axios from 'axios';
 import CircularProgress from './components/CircularProgress'; // Adjust the path as necessary
+import Slideshow from './components/SlideShow'; // Import the Slideshow component
 
 const LazyCommentSection = dynamic(() => import('./components/CommentSection'), {
     suspense: true,
@@ -87,6 +87,9 @@ function Home() {
                         <CircularProgress score={latestScore.score} totalQuestions={latestScore.totalQuestions} />
                     )}
                 </div>
+
+                {/* Slideshow */}
+                <Slideshow />
 
                 {/* Lazy loaded Comment section */}
                 <Suspense fallback={<LoadingPage />}>

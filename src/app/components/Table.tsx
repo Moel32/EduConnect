@@ -34,9 +34,11 @@ const Table = ({ plan }: { plan: StudyPlanObject[] }) => {
               </td>
               <td>
                 <ul>
-                  {p.subtopics.map((subtopic) => (
-                    <li key={subtopic}>{subtopic}</li>
-                  ))}
+                {Array.isArray(p.subtopics) ? (
+                    p.subtopics.map((subtopic) => <li key={subtopic}>{subtopic}</li>)
+                  ) : (
+                    <li>{p.topics}</li>
+                  )}
                 </ul>
               </td>
               <td>{p.hours}</td>
