@@ -74,22 +74,25 @@ function Home() {
             <div className="container mx-auto px-4 py-12">
                 {/* Main content */}
                 <div className="text-center">
-                    <h1 className="text-3xl font-bold mb-8">Welcome to EduConnect, {user && user.username}!</h1>
+                    <h1 className="text-4xl font-bold mb-8">Welcome to EduConnect, {user && user.username}!</h1>
                     {isParagraphVisible && (
-                        <p className="text-sm mb-8 mx-auto text-center max-w-2xl">
+                        <p className="text-lg mb-8 mx-auto text-center max-w-2xl">
                             EduConnect is a platform designed to help students study efficiently with the available resources it offers. Dive into a plethora of engaging video resources, participate in quizzes, utilize flashcards, and plan your studies with our AI Study Planner.
                         </p>
                     )}
-                    <button className="w-60 h-16 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-8 cursor-pointer hover:bg-purple-200 transition duration-300 text-white font-bold italic text-xl" onClick={() => router.push("/video-resources")}>
-                        Explore Video Resources
-                    </button>
+
+                    {/* Slideshow */}
+                     <Slideshow />
+                     <div>
+                        <button className="w-60 h-16 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-8 cursor-pointer hover:bg-purple-200 transition duration-300 text-white font-bold italic text-xl" onClick={() => router.push("/video-resources")}>
+                            Explore Video Resources
+                        </button>
+                     </div>
+                    
                     {latestScore && (
                         <CircularProgress score={latestScore.score} totalQuestions={latestScore.totalQuestions} />
                     )}
                 </div>
-
-                {/* Slideshow */}
-                <Slideshow />
 
                 {/* Lazy loaded Comment section */}
                 <Suspense fallback={<LoadingPage />}>

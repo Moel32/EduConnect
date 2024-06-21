@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Image, { StaticImageData } from 'next/image';
-import quizImage1 from '../../../public/images/study-plan.webp'; // Adjust these paths as necessary
-import quizImage2 from '../../../public/images/study-plan.webp';
-import quizImage3 from '../../../public/images/study-plan.webp';
+import quizImage1 from '../../../public/images/video-resources.webp'; // Adjust these paths as necessary
+import quizImage2 from '../../../public/images/taking-quiz.webp';
+import quizImage3 from '../../../public/images/flashcard-image.webp';
 import quizImage4 from '../../../public/images/study-plan.webp';
 
 interface Slide {

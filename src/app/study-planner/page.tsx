@@ -73,17 +73,16 @@ export default function StudyPlanner() {
   return (
     <NavbarFooter>
       <div className="flex min-h-screen flex-col items-center p-6 md:p-24">
-        <div className="relative w-50 h-50 rounded-full overflow-hidden mx-auto mb-4">
+        <div className="relative w-28 h-28 rounded-full overflow-hidden mx-auto mb-4">
           <Image 
             src={quizImage} 
             alt="Study Planner Icon" 
             layout="fill" 
             objectFit="cover" 
-            onError={() => setError("Failed to load image. Please reload the page.")}
           />
         </div>
-        <h1 className="text-2xl font-bold mb-3">AI Study Planner</h1>
-        <h2 className="text-sm text-white mb-6">
+        <h1 className="text-4xl font-bold mb-3">AI Study Planner</h1>
+        <h2 className="text-lg text-center text-white mb-6">
           Easily create a comprehensive study plan tailored to your needs and study preferences.
         </h2>
         {error && (

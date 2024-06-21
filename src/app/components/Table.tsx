@@ -4,8 +4,8 @@ import { StudyPlanObject } from "@/app/types/types";
 const Table = ({ plan }: { plan: StudyPlanObject[] }) => {
   console.log(plan);
   return (
-    <div className="relative overflow-x-auto bg-gradient-to-b from-gray-200 to-white p-3 shadow-md text-black">
-      <table className="w-full text-sm text-left text-gray-500">
+    <div className="relative overflow-x-auto bg-white p-3 w-100 h-100 shadow-md text-black">
+      <table className="w-full text-sm text-left text-gray-500 table-auto border-collapse border-spacing-2 border border-slate-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-200">
           <tr>
             <th>Day</th>
