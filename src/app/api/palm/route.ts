@@ -17,8 +17,8 @@ export async function POST(request: NextRequest) {
   try {
     const json = await request.json();
     console.log(json.days);
-    const promptString = `create a study plan for topic in days:
-topic: ${json.topics}
+    const promptString = `create a study plan for topics in days:
+topics: ${json.topics}
 days: ${json.days}
 provide topics, subtopics and hours to study for each day
 provide response in the form of json array`;

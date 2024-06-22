@@ -11,17 +11,6 @@ interface NavbarFooterProps {
   children: React.ReactNode;
 }
 
-const Stickman = () => (
-  <svg className="stickman" viewBox="0 0 100 200">
-    <circle cx="50" cy="40" r="10" fill="white" />
-    <line x1="50" y1="50" x2="50" y2="100" stroke="white" strokeWidth="2" />
-    <line x1="50" y1="60" x2="30" y2="80" stroke="white" strokeWidth="2" />
-    <line x1="50" y1="60" x2="70" y2="80" stroke="white" strokeWidth="2" />
-    <line x1="50" y1="100" x2="30" y2="130" stroke="white" strokeWidth="2" />
-    <line x1="50" y1="100" x2="70" y2="130" stroke="white" strokeWidth="2" />
-  </svg>
-);
-
 export default function NavbarFooter({ children }: NavbarFooterProps) {
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -152,7 +141,6 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
           </Link>
         </nav>
       </footer>
-      <Stickman />
     </div>
   );
 }
