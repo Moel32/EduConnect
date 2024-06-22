@@ -97,3 +97,4 @@ const FlashcardPage: React.FC = () => {
 };
 
 export default FlashcardPage;
+

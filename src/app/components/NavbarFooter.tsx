@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -138,6 +139,10 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
           <Link href="/study-planner" className="flex flex-col items-center text-white hover:text-purple-300">
             <i className="fas fa-calendar-alt text-2xl"></i>
             <span>Study Planner</span>
+          </Link>
+          <Link href="/virtual-assistant" className="flex flex-col items-center text-white hover:text-purple-300"> {/* Add this block */}
+            <i className="fas fa-robot text-2xl"></i>
+            <span>Assistant</span>
           </Link>
         </nav>
       </footer>

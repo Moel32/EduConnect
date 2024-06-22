@@ -1,4 +1,5 @@
 "use client";
+// pages/index.tsx (assuming it's the Home component)
 import React, { useState, useEffect, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import NavbarFooter from "./components/NavbarFooter";
@@ -120,12 +121,31 @@ function Home() {
                         Mark videos as favorites to easily access them here. If you want more videos, use the button below to explore more video resources.
                     </p>
 
-                    <div>
-                        <button className="w-60 h-16 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-8 cursor-pointer hover:bg-purple-200 transition duration-300 text-white font-bold italic text-xl" onClick={() => router.push("/video-resources")}>
-                            Explore Video Resources
-                        </button>
+                    <div className="flex justify-center items-center space-x-4 mb-8">
+                        <div className="text-center">
+                            <button
+                                className="w-20 h-20 bg-green-700 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-green-200 transition duration-300 text-white font-bold text-lg"
+                                onClick={() => router.push("/ebook-resources")}
+                            >
+                                <i className="fas fa-book mb-2"></i>
+                            </button>
+                            <p className="text-gray-100">
+                                Access a wide range of free PDFs and eBooks.
+                            </p>
+                        </div>
+                        <div className="text-center">
+                            <button
+                                className="w-20 h-20 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-blue-200 transition duration-300 text-white font-bold text-lg"
+                                onClick={() => router.push("/video-resources")}
+                            >
+                                <i className="fas fa-video mb-2"></i>
+                            </button>
+                            <p className="text-gray-100">
+                                Explore a variety of educational videos.
+                            </p>
+                        </div>
                     </div>
-                    
+
                     <h2 className="text-3xl font-bold mb-4 text-white relative">
                         <span className="inline-block border-b-4 border-white pb-1">
                             <span className="highlighted-animation text-yellow-500">Your Last Quiz Score</span>
