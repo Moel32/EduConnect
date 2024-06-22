@@ -1,5 +1,7 @@
-"use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { faHeart, faComments, faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import toast from 'react-hot-toast'; // Import toast from react-hot-toast
 
 interface VideoPreviewProps {
     vid: {
@@ -15,23 +17,45 @@ interface VideoPreviewProps {
 
 const VideoPreview: React.FC<VideoPreviewProps> = ({ vid }) => {
     const [isFavorite, setIsFavorite] = useState(false);
-
-    useEffect(() => {
-        const favoriteVideos = JSON.parse(localStorage.getItem('favoriteVideos') || '[]');
-        const isFav = favoriteVideos.some((video: any) => video.id.videoId === vid.id.videoId);
-        setIsFavorite(isFav);
-    }, [vid.id.videoId]);
+    const [comment, setComment] = useState('');
+    const [rating, setRating] = useState<number | ''>(0);
 
     const handleFavorite = () => {
-        const favoriteVideos = JSON.parse(localStorage.getItem('favoriteVideos') || '[]');
-        if (isFavorite) {
-            const updatedFavorites = favoriteVideos.filter((video: any) => video.id.videoId !== vid.id.videoId);
-            localStorage.setItem('favoriteVideos', JSON.stringify(updatedFavorites));
-        } else {
-            favoriteVideos.push(vid);
-            localStorage.setItem('favoriteVideos', JSON.stringify(favoriteVideos));
-        }
         setIsFavorite(!isFavorite);
+    };
+
+    const handleSubmitFeedback = async () => {
+        try {
+            if (!rating) {
+                toast.error('Please provide a rating.');
+                return;
+            }
+
+            const response = await fetch('/api/feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    videoId: vid.id.videoId,
+                    rating,
+                    comment,
+                }),
+            });
+
+            if (response.ok) {
+                toast.success('Feedback submitted successfully');
+                setComment('');
+                setRating(0);
+            } else {
+                const errorData = await response.json();
+                console.error('Failed to submit feedback:', errorData.error);
+                toast.error('Failed to submit feedback');
+            }
+        } catch (error) {
+            console.error('Error submitting feedback:', error);
+            toast.error('Error submitting feedback');
+        }
     };
 
     return (
@@ -45,21 +69,45 @@ const VideoPreview: React.FC<VideoPreviewProps> = ({ vid }) => {
                 />
             </div>
             <div className="mt-4 p-4 border rounded-lg bg-white shadow-md">
-                <h4 className="text-2xl font-bold line-clamp-2">
-                    {vid.snippet.title}
-                </h4>
-                <span className="text-sm text-gray-500">
-                    {vid.snippet.channelTitle}
-                </span>
-                <p className="mt-2 text-gray-600 line-clamp-3">
-                    {vid.snippet.description}
-                </p>
-                <button
-                    className={`mt-4 py-2 px-4 rounded ${isFavorite ? 'bg-red-500 text-white' : 'bg-gray-300 text-black'} transition duration-300`}
-                    onClick={handleFavorite}
-                >
-                    {isFavorite ? 'Unfavorite' : 'Favorite'}
-                </button>
+                <h4 className="text-2xl font-bold line-clamp-2">{vid.snippet.title}</h4>
+                <span className="text-sm text-gray-500">{vid.snippet.channelTitle}</span>
+                <p className="mt-2 text-gray-600 line-clamp-3">{vid.snippet.description}</p>
+                <div className="mt-4 flex items-center">
+                    <button
+                        className={`flex items-center space-x-1 text-gray-500 focus:outline-none ${isFavorite ? 'text-red-500' : ''}`}
+                        onClick={handleFavorite}
+                    >
+                        <FontAwesomeIcon icon={faHeart} />
+                        <span>Favorite</span>
+                    </button>
+                    <button
+                        className="ml-4 flex items-center space-x-1 text-gray-500 focus:outline-none"
+                        onClick={handleSubmitFeedback}
+                    >
+                        <FontAwesomeIcon icon={faComments} />
+                        <span>Submit Feedback</span>
+                    </button>
+                </div>
+                <textarea
+                    className="mt-4 p-2 border rounded w-full text-black"
+                    rows={4}
+                    placeholder="Enter your feedback..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                />
+                <div className="flex items-center mt-2">
+                    <FontAwesomeIcon icon={faStar} className="text-yellow-500 mr-2" />
+                    <input
+                        type="number"
+                        className="p-2 border rounded w-20 text-black"
+                        placeholder="Rating (1-5)"
+                        min={1}
+                        max={5}
+                        value={rating === 0 ? '' : rating}
+                        onChange={(e) => setRating(parseInt(e.target.value))}
+                    />
+                    <span className="ml-2 text-gray-500">1 (lowest) - 5 (highest)</span>
+                </div>
             </div>
         </div>
     );
