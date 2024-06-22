@@ -1,12 +1,11 @@
 "use client";
-
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import '@fortawesome/fontawesome-free/css/all.css';
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Notifications from "../components/Notifications"; // Import the Notifications component
+import Notifications from "../components/Notifications";
 
 interface NavbarFooterProps {
   children: React.ReactNode;
@@ -15,6 +14,9 @@ interface NavbarFooterProps {
 export default function NavbarFooter({ children }: NavbarFooterProps) {
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [navbarVisible, setNavbarVisible] = useState(true);
+  const [bottomNavbarVisible, setBottomNavbarVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const logout = async () => {
     try {
@@ -32,7 +34,7 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
-    if (!(event.target as HTMLElement).closest('.dropdown')) {
+    if (!(event.target as HTMLElement).closest('.dropdown') && !(event.target as HTMLElement).closest('.notification-icon')) {
       setDropdownOpen(false);
     }
   };
@@ -42,6 +44,17 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
       if (event.key === "Escape") {
         setDropdownOpen(false);
       }
+    };
+
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY) {
+        setNavbarVisible(false);
+        setBottomNavbarVisible(false);
+      } else {
+        setNavbarVisible(true);
+        setBottomNavbarVisible(true);
+      }
+      setLastScrollY(window.scrollY);
     };
 
     if (dropdownOpen) {
@@ -54,21 +67,26 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
       document.removeEventListener("click", handleOutsideClick);
     }
 
+    window.addEventListener('scroll', handleScroll);
+
     return () => {
       document.body.style.overflow = "";
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("click", handleOutsideClick);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [dropdownOpen]);
+  }, [dropdownOpen, lastScrollY]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-white relative">
-      <nav className="bg-violet-950 p-4 flex justify-between items-center fixed top-0 w-full z-20">
+      <nav className={`bg-violet-950 p-4 flex justify-between items-center fixed top-0 w-full z-20 transition-transform duration-300 ${navbarVisible ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="flex items-center space-x-4">
           <div className="text-2xl font-bold">EduConnect</div>
         </div>
         <div className="relative flex items-center space-x-4 text-lg">
-          <Notifications />
+          <div className="notification-icon">
+            <Notifications />
+          </div>
           <button onClick={toggleDropdown} className="hover:text-purple-300 focus:outline-none" aria-label="Menu">
             <i className="fas fa-bars"></i>
           </button>
@@ -103,7 +121,7 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
           {children}
         </div>
       </div>
-      <footer className="bg-violet-950 p-4 text-center text-sm fixed bottom-0 w-full z-20">
+      <footer className={`bg-violet-950 p-2 text-center text-sm fixed bottom-0 w-full z-20 transition-transform duration-300 ${bottomNavbarVisible ? 'translate-y-0' : 'translate-y-full'}`}>
         <nav className="flex justify-around">
           <Link href="/" className="flex flex-col items-center text-white hover:text-purple-300">
             <i className="fas fa-home text-2xl"></i>

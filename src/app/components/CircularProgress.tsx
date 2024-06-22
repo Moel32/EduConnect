@@ -17,8 +17,8 @@ const CircularProgress: React.FC<CircularProgressProps> = ({ score, totalQuestio
                     value={percentage}
                     text={`${score} / ${totalQuestions}`}
                     styles={buildStyles({
-                        textColor: '#FFFFFF', // White text
-                        pathColor: `rgba(75, 255, 0, 1, ${percentage / 100})`,
+                        textColor: '#FFFFFF', // Black text
+                        pathColor: `rgba(255, 165, 0, ${percentage / 100})`, // Bright orange path color
                         trailColor: '#d6d6d6',
                         textSize: '16px',
                         pathTransitionDuration: 0.5

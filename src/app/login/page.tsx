@@ -27,7 +27,11 @@ export default function LoginPage() {
             router.push("/");
         } catch (error: any) {
             console.log("Login failed", error.message);
-            toast.error(error.message);
+            if (error.message === 'Network Error') {
+                toast.error("Network Error: Please check your internet connection.");
+            } else {
+                toast.error(error.message);
+            }
         } finally {
             setLoading(false);
         }
@@ -46,8 +50,8 @@ export default function LoginPage() {
             <InternetCheckComponent />
             <div className="relative p-8 bg-white rounded-lg shadow-lg max-w-md w-full mx-4 sm:mx-auto">
                 <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
-                    <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-white">
-                        <Image src={logoImage} alt="Logo" fill style={{objectFit:"cover"}} />
+                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white">
+                        <Image src={logoImage} alt="Logo" layout="fill" objectFit="cover" />
                     </div>
                 </div>
                 <div className="pt-12">
@@ -83,7 +87,7 @@ export default function LoginPage() {
                     >
                         {loading ? "Loading..." : "Login"}
                     </button>
-                    <p className="text-sm mt-4 text-center">
+                    <p className="mt-4 text-center text-sm">
                         Don&apos;t have an account? <Link href="/signup" className="text-indigo-500">Register here</Link>
                     </p>
                 </div>
