@@ -48,7 +48,7 @@ export default function SignupPage() {
             <div className="relative p-8 bg-white rounded-lg shadow-lg max-w-md w-full mx-4 sm:mx-auto">
                 <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
                     <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white">
-                        <Image src={logoImage} alt="Logo" fill style={{objectFit:"cover"}} />
+                        <Image src={logoImage} alt="Logo" fill style={{objectFit:"cover"}} aria-label="SignUp Image"/>
                     </div>
                 </div>
                 <div className="pt-12">

@@ -12,7 +12,7 @@ const VideoList: React.FC<VideoListProps> = ({ videos, onVideoSelect }) => {
             return (
                 <VideoItem 
                     onVideoSelect={onVideoSelect} 
-                    key={video.etag} 
+                    key={video.id.videoId} 
                     video={video} 
                 />
             );

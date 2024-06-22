@@ -29,7 +29,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onQuerySubmit }) => {
             <form onSubmit={onSearchSubmit} className="w-full max-w-lg mx-auto">
                 <div className="flex items-center border-b border-b-2 border-blue-500 py-2">
                     <input
-                        className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                        className="appearance-none bg-transparent border-none w-full text-white mr-3 py-1 px-2 leading-tight focus:outline-none"
                         type="text"
                         placeholder="Search Video"
                         value={query}

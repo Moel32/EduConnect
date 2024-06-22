@@ -1,12 +1,18 @@
-// types/course.ts
-export interface ICourse {
-    _id: string;
-    name: string;
-    description: string;
-    price: number;
-    // Add other fields as necessary
-}
+// types.ts
 
-export interface ICourseProps {
-    course: ICourse;
+export interface Video {
+    id: {
+        videoId: string;
+        kind: string;
+    };
+    snippet: {
+        title: string;
+        description: string;
+        thumbnails: {
+            medium: { url: string };
+            high: { url: string };
+        };
+        channelTitle: string;
+    };
+    etag: string;
 }

@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes ninja-move {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(200px, 100px) rotate(360deg);
+    }
+    50% {
+      transform: translate(-200px, -150px) rotate(-360deg);
+    }
+    75% {
+      transform: translate(300px, -100px) rotate(360deg);
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+  }
+  
+  .stickman {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    height: 100px;
+    fill: white;
+    animation: ninja-move 5s infinite;
+    z-index: 50;
+  }
+  

@@ -35,8 +35,8 @@ const Slideshow: React.FC = () => {
                 <Image 
                     src={slides[currentIndex].src}
                     alt="Slideshow Image"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{objectFit:"cover"}}
                     aria-label="Slideshow Image"
                 />
             </div>

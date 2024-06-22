@@ -17,17 +17,17 @@ interface VideoItemProps {
 const VideoItem: React.FC<VideoItemProps> = ({ video, onVideoSelect }) => {
     return (
         <div
-            className="flex flex-col md:flex-row p-4 border rounded-lg cursor-pointer hover:bg-gray-200 transition duration-300"
+            className="flex flex-col p-4 border rounded-lg cursor-pointer hover:bg-gray-200 transition duration-300"
             onClick={() => onVideoSelect(video)}
         >
             <Image 
                 src={video.snippet.thumbnails.medium.url} 
-                className="w-full md:w-48 h-auto rounded-md" 
+                className="w-full h-auto rounded-md" 
                 alt="Video thumbnail"
                 width={320}
                 height={180}
             />
-            <div className="mt-2 md:mt-0 md:ml-4 flex flex-col justify-between">
+            <div className="mt-2 flex flex-col justify-between">
                 <div className="font-bold text-lg line-clamp-2">
                     {video.snippet.title}
                 </div>

@@ -77,8 +77,9 @@ export default function StudyPlanner() {
           <Image 
             src={quizImage} 
             alt="Study Planner Icon" 
-            layout="fill" 
-            objectFit="cover" 
+            fill
+            style={{objectFit:"cover"}}
+            aria-label="Study Planner Image"
           />
         </div>
         <h1 className="text-4xl font-bold mb-3">AI Study Planner</h1>

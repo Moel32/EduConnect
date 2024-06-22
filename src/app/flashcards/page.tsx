@@ -58,8 +58,9 @@ const FlashcardPage: React.FC = () => {
             <Image 
               src={flashcardImage} 
               alt="Flashcard Icon" 
-              layout="fill" 
-              objectFit="cover" 
+              fill
+              style={{objectFit:"cover"}}
+              aria-label="Flashcard Image"
             />
           </div>
           <h1 className="text-4xl font-bold mb-4">Flashcards</h1>
