@@ -1,5 +1,4 @@
 "use client";
-// pages/index.tsx (assuming it's the Home component)
 import React, { useState, useEffect, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import NavbarFooter from "./components/NavbarFooter";
@@ -48,6 +47,11 @@ function Home() {
             try {
                 const response = await axios.get('/api/profile');
                 setUser(response.data.user);
+                // Play welcome message if not played before
+                if (!localStorage.getItem('welcomeMessagePlayed')) {
+                    playWelcomeMessage(response.data.user.username);
+                    localStorage.setItem('welcomeMessagePlayed', 'true');
+                }
             } catch (error) {
                 console.error("Error fetching user", error);
             } finally {
@@ -69,6 +73,13 @@ function Home() {
             setIsParagraphVisible(true);
         }, 2000); // Adjust timing as needed
     }, []);
+
+    const playWelcomeMessage = (username: string) => {
+        const message = `Welcome to EduConnect, ${username}`;
+        const speech = new SpeechSynthesisUtterance(message);
+        speech.lang = 'en-US';
+        window.speechSynthesis.speak(speech);
+    };
 
     const handleFavoriteVideoClick = (video: any) => {
         router.push(`/video-resources?videoId=${video.id.videoId}`);

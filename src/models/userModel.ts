@@ -29,9 +29,12 @@ const userSchema = new mongoose.Schema({
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,
     verifyTokenExpiry: Date,
-})
+    avatar: {
+        type: String,
+        default: "/images/defaultAvatar.png",
+    },
+});
 
-const User = mongoose.models.users || mongoose.model
-("users", userSchema);
+const User = mongoose.models.users || mongoose.model("users", userSchema);
 
 export default User;

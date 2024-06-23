@@ -18,8 +18,10 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
   const [navbarVisible, setNavbarVisible] = useState(true);
   const [bottomNavbarVisible, setBottomNavbarVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const logout = async () => {
+    setIsLoggingOut(true);
     try {
       await axios.get('/api/users/logout');
       toast.success('Logout successful');
@@ -27,6 +29,8 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
     } catch (error: any) {
       console.log(error.message);
       toast.error(error.message);
+    } finally {
+      setIsLoggingOut(false);
     }
   };
 
@@ -95,20 +99,34 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
             <div className="dropdown absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-20">
               <ul className="p-2">
                 <li className="py-1 flex items-center">
-                  <i className="fas fa-user mr-2 text-purple-900"></i>
-                  <Link href="/profile" className="block px-4 py-2 hover:bg-purple-200 rounded text-purple-900">
+                  <button
+                    onClick={() => router.push("/profile")}
+                    className="flex items-center w-full px-4 py-2 hover:bg-purple-200 rounded text-purple-900 focus:outline-none"
+                  >
+                    <i className="fas fa-user mr-2 text-purple-900"></i>
                     Profile
-                  </Link>
+                  </button>
                 </li>
                 <li className="py-1 flex items-center">
-                  <i className="fas fa-cog mr-2 text-purple-900"></i>
-                  <Link href="/settings" className="block px-4 py-2 hover:bg-purple-200 rounded text-purple-900">
+                  <button
+                    onClick={() => router.push("/settings")}
+                    className="flex items-center w-full px-4 py-2 hover:bg-purple-200 rounded text-purple-900 focus:outline-none"
+                  >
+                    <i className="fas fa-cog mr-2 text-purple-900"></i>
                     Settings
-                  </Link>
+                  </button>
                 </li>
-                <li className="py-1 flex items-center">
-                  <button onClick={logout} className="w-full bg-purple-500 text-white hover:bg-purple-700 font-bold py-2 px-4 rounded">
-                    Logout
+                <li className="py-1 flex items-center justify-center">
+                  <button
+                    onClick={logout}
+                    className="flex items-center justify-center w-full text-purple-900 focus:outline-none"
+                    disabled={isLoggingOut}
+                  >
+                    {isLoggingOut ? (
+                      <i className="fas fa-spinner fa-spin text-purple-900"></i>
+                    ) : (
+                      <i className="fas fa-sign-out-alt text-purple-900"></i>
+                    )}
                   </button>
                 </li>
               </ul>
@@ -140,7 +158,7 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
             <i className="fas fa-calendar-alt text-2xl"></i>
             <span>Study Planner</span>
           </Link>
-          <Link href="/virtual-assistant" className="flex flex-col items-center text-white hover:text-purple-300"> {/* Add this block */}
+          <Link href="/virtual-assistant" className="flex flex-col items-center text-white hover:text-purple-300">
             <i className="fas fa-robot text-2xl"></i>
             <span>Assistant</span>
           </Link>
