@@ -4,24 +4,18 @@ interface SearchBarProps {
     onQuerySubmit: (query: string) => void;
 }
 
-const programmingKeywords = ["programming", "code", "coding", "development", "software", "javascript", "python", "java", "c++", "c#", "ruby", "html", "css", "web development", "kotlin", "react js", "react native", "next js", "vue js", "mobile"];
-
 const SearchBar: React.FC<SearchBarProps> = ({ onQuerySubmit }) => {
     const [query, setQuery] = useState<string>("");
     const [error, setError] = useState<string>("");
 
     const onSearchSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        if (isValidQuery(query)) {
+        if (query.trim()) {
             onQuerySubmit(query);
             setError("");
         } else {
-            setError("Please enter a programming-related query.");
+            setError("Please enter a query.");
         }
-    };
-
-    const isValidQuery = (query: string) => {
-        return programmingKeywords.some(keyword => query.toLowerCase().includes(keyword));
     };
 
     return (

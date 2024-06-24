@@ -65,7 +65,7 @@ const VideosPage: React.FC = () => {
                     </div>
                     <h1 className="text-5xl font-bold">Video Resources</h1>
                 </div>
-                <p className="text-lg mb-8 mx-auto text-center">Search for videos that can help you in your programming journey. For now, the search is limited to some programming queries.</p>
+                <p className="text-lg mb-8 mx-auto text-center">Search for videos that can help you in your learning journey.</p>
                 <SearchBar onQuerySubmit={onQuerySubmit} />
                 <span>Got {videos.length} videos</span>
                 {selectedVideo && <VideoPreview vid={selectedVideo} />}

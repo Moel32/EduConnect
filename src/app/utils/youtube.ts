@@ -6,7 +6,7 @@ const youtube: AxiosInstance = axios.create({
     baseURL: "https://www.googleapis.com/youtube/v3",
     params: {
         part: "snippet",
-        maxResults: 10,
+        maxResults: 30,
         key: KEY,
         q: "programming"  // Default query to filter programming-related videos
     }
