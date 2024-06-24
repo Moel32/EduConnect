@@ -97,7 +97,7 @@ function Home() {
                         Welcome to EduConnect, {user && user.username}!
                     </h1>
                     {isParagraphVisible && (
-                        <p className="text-lg mb-8 mx-auto text-center max-w-2xl text-gray-100">
+                        <p className="text-xl mb-8 mx-auto text-center max-w-2xl text-gray-100">
                             <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 inline-block py-1 px-2 rounded-lg text-white font-bold mr-2">
                                 EduConnect
                             </span>
@@ -128,7 +128,7 @@ function Home() {
                         </div>
                     )}
 
-                    <p className="text-lg mb-8 mx-auto text-center max-w-2xl text-gray-100">
+                    <p className="text-xl mb-8 mx-auto text-center max-w-2xl text-gray-100">
                         Mark videos as favorites to easily access them here. If you want more videos, use the button below to explore more video resources.
                     </p>
 

@@ -83,7 +83,7 @@ export default function StudyPlanner() {
           />
         </div>
         <h1 className="text-4xl font-bold mb-3">AI Study Planner</h1>
-        <h2 className="text-lg text-center text-gray-100 mb-6">
+        <h2 className="text-xl text-center text-gray-100 mb-6">
           Easily create a comprehensive study plan tailored to your needs and study preferences.
         </h2>
         {error && (

@@ -64,7 +64,7 @@ const FlashcardPage: React.FC = () => {
             />
           </div>
           <h1 className="text-4xl font-bold mb-4">Flashcards</h1>
-          <h2 className="text-sm text-white mb-6">
+          <h2 className="text-xl text-white mb-6">
             Flashcards are a powerful tool for learning and memorization. Create custom flashcards to help reinforce your knowledge and improve your memory recall.
           </h2>
           <FlashcardForm onSave={handleSave} initialData={editingFlashcard} />
