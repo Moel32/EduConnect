@@ -1,24 +1,42 @@
 "use client";
+
 // pages/ebooks.tsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavbarFooter from '../components/NavbarFooter';
 import axios from 'axios';
 import LoadingPage from '../components/LoadingPage';
 import BookList from '../components/BookList';
-import AnimatedMessage from '../components/AnimatedMessage'; // Import AnimatedMessage component
+import AnimatedMessage from '../components/AnimatedMessage';
 import { Book } from '../types/ebook';
 
 const EbookResources: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Book[]>([]);
   const [loading, setLoading] = useState(false);
+  const [randomBooks, setRandomBooks] = useState<Book[]>([]);
 
+  // Function to fetch random books from the API
+  const fetchRandomBooks = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get<Book[]>('/api/random-ebooks?category=programming');
+      setRandomBooks(response.data);
+    } catch (error) {
+      console.error('Error fetching random books', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Function to handle search by query
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const response = await axios.get<Book[]>(`/api/books?q=${searchQuery}`);
-      setSearchResults(response.data);
+      const response = await axios.get<Book[]>(`/api/ebooks?q=${searchQuery}`);
+      // Filter out books that are not downloadable
+      const downloadableBooks = response.data.filter(book => !!book.ia);
+      setSearchResults(downloadableBooks);
     } catch (error) {
       console.error('Error fetching eBooks', error);
       setSearchResults([]);
@@ -27,12 +45,16 @@ const EbookResources: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    fetchRandomBooks();
+  }, []);
+
   return (
     <NavbarFooter>
       <div className="container mx-auto px-4 py-12">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-8 text-white">EBooks Library</h1>
-          <AnimatedMessage /> {/* Display animated message */}
+          <AnimatedMessage />
           <input
             type="text"
             className="w-full p-4 mb-4 text-gray-700 rounded-md"
@@ -48,7 +70,11 @@ const EbookResources: React.FC = () => {
             Search
           </button>
           {loading && <LoadingPage />}
-          {!loading && <BookList books={searchResults} />}
+          {!loading && searchQuery ? (
+            <BookList books={searchResults} />
+          ) : (
+            <BookList books={randomBooks} />
+          )}
         </div>
       </div>
     </NavbarFooter>

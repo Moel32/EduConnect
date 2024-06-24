@@ -1,9 +1,10 @@
-// types/book.ts
+// types/ebook.ts
 
 export interface Book {
   key: string;
   title: string;
   authors: string[];
   publish_year: string;
-  ia?: string; // Internet Archive identifier
+  ia?: string;
+  cover_image?: string; // Add this line
 }

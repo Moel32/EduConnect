@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { faHeart, faComments, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import toast from 'react-hot-toast'; // Import toast from react-hot-toast
+import toast from 'react-hot-toast';
 
 interface VideoPreviewProps {
     vid: {
@@ -20,7 +20,21 @@ const VideoPreview: React.FC<VideoPreviewProps> = ({ vid }) => {
     const [comment, setComment] = useState('');
     const [rating, setRating] = useState<number | ''>(0);
 
+    useEffect(() => {
+        const savedFavorites = JSON.parse(localStorage.getItem('favoriteVideos') || '[]');
+        const isFavorited = savedFavorites.some((video: any) => video.id.videoId === vid.id.videoId);
+        setIsFavorite(isFavorited);
+    }, [vid]);
+
     const handleFavorite = () => {
+        const savedFavorites = JSON.parse(localStorage.getItem('favoriteVideos') || '[]');
+        let updatedFavorites;
+        if (isFavorite) {
+            updatedFavorites = savedFavorites.filter((video: any) => video.id.videoId !== vid.id.videoId);
+        } else {
+            updatedFavorites = [...savedFavorites, vid];
+        }
+        localStorage.setItem('favoriteVideos', JSON.stringify(updatedFavorites));
         setIsFavorite(!isFavorite);
     };
 

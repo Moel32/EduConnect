@@ -8,10 +8,6 @@ interface BookItemProps {
 }
 
 const BookItem: React.FC<BookItemProps> = ({ book }) => {
-  const handleDownload = () => {
-    window.open(`https://archive.org/details/${book.ia}`, '_blank');
-  };
-
   return (
     <div className="bg-white p-4 rounded shadow-md mb-4">
       <h2 className="text-xl font-bold mb-2">{book.title}</h2>
@@ -21,12 +17,12 @@ const BookItem: React.FC<BookItemProps> = ({ book }) => {
       <p className="text-gray-700 mb-2">
         Publish Year: {book.publish_year}
       </p>
-      <button
-        onClick={handleDownload}
-        className="bg-violet-500 text-white py-2 px-4 rounded hover:bg-violet-700 focus:outline-none"
-      >
-        Download
-      </button>
+      {book.cover_image && (
+        <img src={book.cover_image} alt={book.title} className="rounded-md mb-2" style={{ maxWidth: '100%', height: 'auto' }} />
+      )}
+      <p className="text-gray-700 mb-2">
+        <em>Cover image may not be available for all books</em>
+      </p>
     </div>
   );
 };

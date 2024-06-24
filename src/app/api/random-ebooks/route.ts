@@ -1,4 +1,4 @@
-// pages/api/books.ts
+// pages/api/random-books.ts
 
 import { NextResponse, NextRequest } from 'next/server';
 import axios from 'axios';
@@ -10,11 +10,9 @@ interface GoogleBook {
     title: string;
     authors?: string[];
     publishedDate?: string;
-    description?: string;
     imageLinks?: {
       thumbnail: string;
     };
-    previewLink?: string;
   };
 }
 
@@ -28,7 +26,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const response = await axios.get<{ items: GoogleBook[] }>(
-      `https://www.googleapis.com/books/v1/volumes?q=${category}&maxResults=20`
+      `https://www.googleapis.com/books/v1/volumes?q=${category}&maxResults=10`
     );
 
     const books: Book[] = response.data.items.map((item) => ({
@@ -36,14 +34,12 @@ export async function GET(req: NextRequest) {
       title: item.volumeInfo.title,
       authors: item.volumeInfo.authors || [],
       publish_year: item.volumeInfo.publishedDate?.substring(0, 4) || '',
-      description: item.volumeInfo.description || '',
-      cover_image: item.volumeInfo.imageLinks?.thumbnail || undefined,
-      preview_link: item.volumeInfo.previewLink || ''
+      cover_image: item.volumeInfo.imageLinks?.thumbnail || undefined
     }));
 
     return NextResponse.json(books, { status: 200 });
   } catch (error) {
-    console.error('Error fetching books', error);
+    console.error('Error fetching random books', error);
     return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
   }
 }

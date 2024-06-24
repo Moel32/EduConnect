@@ -8,6 +8,7 @@ import axios from 'axios';
 import CircularProgress from './components/CircularProgress';
 import Slideshow from './components/SlideShow';
 import VideoItem from './components/VideoItem';
+import VideoPreview from './components/VideoPreview'; // Import VideoPreview component
 
 const LazyCommentSection = dynamic(() => import('./components/CommentSection'), {
     suspense: true,
@@ -28,7 +29,8 @@ function Home() {
     const [comment, setComment] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [latestScore, setLatestScore] = useState<{ score: number, totalQuestions: number } | null>(null);
-    const [favoriteVideos, setFavoriteVideos] = useState<any[]>([]); // Adjust type as needed
+    const [favoriteVideos, setFavoriteVideos] = useState<any[]>([]);
+    const [selectedVideo, setSelectedVideo] = useState<any | null>(null); // Add state for selected video
     const router = useRouter();
     const [isParagraphVisible, setIsParagraphVisible] = useState(false);
 
@@ -47,7 +49,6 @@ function Home() {
             try {
                 const response = await axios.get('/api/profile');
                 setUser(response.data.user);
-                // Play welcome message if not played before
                 if (!localStorage.getItem('welcomeMessagePlayed')) {
                     playWelcomeMessage(response.data.user.username);
                     localStorage.setItem('welcomeMessagePlayed', 'true');
@@ -71,7 +72,7 @@ function Home() {
 
         setTimeout(() => {
             setIsParagraphVisible(true);
-        }, 2000); // Adjust timing as needed
+        }, 2000);
     }, []);
 
     const playWelcomeMessage = (username: string) => {
@@ -82,12 +83,8 @@ function Home() {
     };
 
     const handleFavoriteVideoClick = (video: any) => {
-        router.push(`/video-resources?videoId=${video.id.videoId}`);
+        setSelectedVideo(video); // Set selected video to play it
     };
-
-    if (loading) {
-        return <LoadingPage />;
-    }
 
     return (
         <NavbarFooter>
@@ -121,10 +118,16 @@ function Home() {
                                         className="cursor-pointer"
                                         onClick={() => handleFavoriteVideoClick(video)}
                                     >
-                                        <VideoItem video={video} onVideoSelect={() => {}} />
+                                        <VideoItem video={video} onVideoSelect={() => { }} />
                                     </div>
                                 ))}
                             </div>
+                        </div>
+                    )}
+
+                    {selectedVideo && (
+                        <div className="mt-8">
+                            <VideoPreview vid={selectedVideo} />
                         </div>
                     )}
 

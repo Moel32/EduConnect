@@ -1,14 +1,14 @@
 "use client";
-import React, { useState } from 'react';
-import Image from 'next/image'; // Import the Image component from Next.js
+import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import SearchBar from "../components/SearchBar";
 import youtube from "../utils/youtube";
 import NavbarFooter from '../components/NavbarFooter';
 import VideoList from "../components/VideoList";
 import VideoPreview from '../components/VideoPreview';
-import LoadingPage from '../components/LoadingPage'; // Import the LoadingPage component
-import logo from '../../../public/images/video-resources.webp'; // Path to your logo image
-import { useRouter } from 'next/navigation'; // Import useRouter from next/navigation
+import LoadingPage from '../components/LoadingPage';
+import logo from '../../../public/images/video-resources.webp';
+import { useRouter } from 'next/navigation';
 
 interface Video {
     id: {
@@ -28,10 +28,24 @@ interface Video {
 }
 
 const VideosPage: React.FC = () => {
-    const router = useRouter(); // Use useRouter hook here
+    const router = useRouter();
     const [videos, setVideos] = useState<Video[]>([]);
     const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
     const [loading, setLoading] = useState(false);
+    const [isSearchActive, setIsSearchActive] = useState(false);
+
+    useEffect(() => {
+        const fetchRandomProgrammingVideos = async () => {
+            setLoading(true);
+            const res = await youtube.get("/search", {
+                params: { q: "programming tutorials" }
+            });
+            setVideos(res.data.items);
+            setLoading(false);
+        };
+
+        fetchRandomProgrammingVideos();
+    }, []);
 
     const onQuerySubmit = async (query: string) => {
         setLoading(true);
@@ -40,6 +54,7 @@ const VideosPage: React.FC = () => {
         });
         setVideos(res.data.items);
         setSelectedVideo(null);
+        setIsSearchActive(true);
         setLoading(false);
     };
 
@@ -57,11 +72,7 @@ const VideosPage: React.FC = () => {
             <div className="container mx-auto px-4 py-12">
                 <div className="text-center mb-8">
                     <div className="w-32 h-32 relative mx-auto mb-4">
-                        <Image src={logo} alt="Logo" 
-                        fill 
-                        style={{objectFit:"cover"}}
-                        aria-label="Video-Resources Image"
-                        className="rounded-full" />
+                        <Image src={logo} alt="Logo" fill style={{ objectFit: "cover" }} aria-label="Video-Resources Image" className="rounded-full" />
                     </div>
                     <h1 className="text-5xl font-bold">Video Resources</h1>
                 </div>
@@ -76,4 +87,3 @@ const VideosPage: React.FC = () => {
 };
 
 export default VideosPage;
-
