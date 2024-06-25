@@ -35,7 +35,7 @@ function Home() {
     const router = useRouter();
     const [isParagraphVisible, setIsParagraphVisible] = useState(false);
 
-    const [isEbookVisible, setIsEbookVisible] = useState(true); // State to manage eBook button visibility
+    const [isEbookVisible, setIsEbookVisible] = useState(false); // State to manage eBook button visibility
 
     const handleSubmit = async () => {
         try {
