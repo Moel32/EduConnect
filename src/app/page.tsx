@@ -35,7 +35,7 @@ function Home() {
     const router = useRouter();
     const [isParagraphVisible, setIsParagraphVisible] = useState(false);
 
-    const [isEbookVisible, setIsEbookVisible] = useState(false); // State to manage eBook button visibility
+    const [isEbookVisible, setIsEbookVisible] = useState(true); // State to manage eBook button visibility
 
     const handleSubmit = async () => {
         try {
@@ -142,7 +142,7 @@ function Home() {
                         {isEbookVisible && (
                             <div className="text-center">
                                 <button
-                                    className="w-20 h-20 bg-green-700 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-green-200 transition duration-300 text-white font-bold text-lg"
+                                    className="w-40 h-20 bg-green-700 rounded-lg flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-green-200 transition duration-300 text-white font-bold text-lg"
                                     onClick={() => router.push("/ebook-resources")}
                                 >
                                     <i className="fas fa-book mb-2"></i>

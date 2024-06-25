@@ -1,5 +1,3 @@
-// pages/api/random-books.ts
-
 import { NextResponse, NextRequest } from 'next/server';
 import axios from 'axios';
 import { Book } from '../../types/ebook'; // Adjust the path based on your project structure
@@ -13,6 +11,7 @@ interface GoogleBook {
     imageLinks?: {
       thumbnail: string;
     };
+    previewLink?: string;
   };
 }
 
@@ -34,7 +33,8 @@ export async function GET(req: NextRequest) {
       title: item.volumeInfo.title,
       authors: item.volumeInfo.authors || [],
       publish_year: item.volumeInfo.publishedDate?.substring(0, 4) || '',
-      cover_image: item.volumeInfo.imageLinks?.thumbnail || undefined
+      cover_image: item.volumeInfo.imageLinks?.thumbnail || undefined,
+      preview_link: item.volumeInfo.previewLink || '' // Added preview link
     }));
 
     return NextResponse.json(books, { status: 200 });

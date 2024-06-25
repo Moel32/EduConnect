@@ -1,7 +1,5 @@
 "use client";
 
-// pages/ebooks.tsx
-
 import React, { useState, useEffect } from 'react';
 import NavbarFooter from '../components/NavbarFooter';
 import axios from 'axios';
@@ -34,9 +32,7 @@ const EbookResources: React.FC = () => {
     setLoading(true);
     try {
       const response = await axios.get<Book[]>(`/api/ebooks?q=${searchQuery}`);
-      // Filter out books that are not downloadable
-      const downloadableBooks = response.data.filter(book => !!book.ia);
-      setSearchResults(downloadableBooks);
+      setSearchResults(response.data);
     } catch (error) {
       console.error('Error fetching eBooks', error);
       setSearchResults([]);

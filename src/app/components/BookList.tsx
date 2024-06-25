@@ -1,30 +1,26 @@
 // components/BookList.tsx
 
 import React from 'react';
-import BookItem from './BookItem';
 import { Book } from '../types/ebook';
+import BookItem from './BookItem';
 
 interface BookListProps {
   books: Book[];
 }
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
-  if (!Array.isArray(books) || books.length === 0) {
-    return (
-      <div className="text-center mt-8 text-gray-700">
-        {books === null ? (
-          <p>No books found. Please refine your search.</p>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-    );
+  console.log('Books received:', books);
+
+  if (!books.length) {
+    return <p className="text-gray-100">No books found.</p>;
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="flex flex-wrap justify-center">
       {books.map((book) => (
-        <BookItem key={book.key} book={book} />
+        <div key={book.key} className="p-2 md:p-4 w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
+          <BookItem book={book} />
+        </div>
       ))}
     </div>
   );
