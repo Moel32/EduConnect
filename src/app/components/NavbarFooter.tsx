@@ -158,10 +158,11 @@ export default function NavbarFooter({ children }: NavbarFooterProps) {
             <i className="fas fa-calendar-alt text-2xl"></i>
             <span>Study Planner</span>
           </Link>
-          <Link href="/virtual-assistant" className="flex flex-col items-center text-white hover:text-purple-300">
+          {/* Comment out or remove the AI icon button */}
+          {/* <Link href="/virtual-assistant" className="flex flex-col items-center text-white hover:text-purple-300">
             <i className="fas fa-robot text-2xl"></i>
             <span>Assistant</span>
-          </Link>
+          </Link> */}
         </nav>
       </footer>
     </div>

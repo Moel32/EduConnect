@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import NavbarFooter from "./components/NavbarFooter";
@@ -8,7 +9,7 @@ import axios from 'axios';
 import CircularProgress from './components/CircularProgress';
 import Slideshow from './components/SlideShow';
 import VideoItem from './components/VideoItem';
-import VideoPreview from './components/VideoPreview'; // Import VideoPreview component
+import VideoPreview from './components/VideoPreview';
 
 const LazyCommentSection = dynamic(() => import('./components/CommentSection'), {
     suspense: true,
@@ -30,9 +31,11 @@ function Home() {
     const [successMessage, setSuccessMessage] = useState('');
     const [latestScore, setLatestScore] = useState<{ score: number, totalQuestions: number } | null>(null);
     const [favoriteVideos, setFavoriteVideos] = useState<any[]>([]);
-    const [selectedVideo, setSelectedVideo] = useState<any | null>(null); // Add state for selected video
+    const [selectedVideo, setSelectedVideo] = useState<any | null>(null);
     const router = useRouter();
     const [isParagraphVisible, setIsParagraphVisible] = useState(false);
+
+    const [isEbookVisible, setIsEbookVisible] = useState(false); // State to manage eBook button visibility
 
     const handleSubmit = async () => {
         try {
@@ -83,7 +86,7 @@ function Home() {
     };
 
     const handleFavoriteVideoClick = (video: any) => {
-        setSelectedVideo(video); // Set selected video to play it
+        setSelectedVideo(video);
     };
 
     return (
@@ -136,20 +139,22 @@ function Home() {
                     </p>
 
                     <div className="flex justify-center items-center space-x-4 mb-8">
+                        {isEbookVisible && (
+                            <div className="text-center">
+                                <button
+                                    className="w-20 h-20 bg-green-700 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-green-200 transition duration-300 text-white font-bold text-lg"
+                                    onClick={() => router.push("/ebook-resources")}
+                                >
+                                    <i className="fas fa-book mb-2"></i>
+                                </button>
+                                <p className="text-gray-100">
+                                    Access a wide range of free PDFs and eBooks.
+                                </p>
+                            </div>
+                        )}
                         <div className="text-center">
                             <button
-                                className="w-20 h-20 bg-green-700 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-green-200 transition duration-300 text-white font-bold text-lg"
-                                onClick={() => router.push("/ebook-resources")}
-                            >
-                                <i className="fas fa-book mb-2"></i>
-                            </button>
-                            <p className="text-gray-100">
-                                Access a wide range of free PDFs and eBooks.
-                            </p>
-                        </div>
-                        <div className="text-center">
-                            <button
-                                className="w-20 h-20 bg-blue-700 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-blue-200 transition duration-300 text-white font-bold text-lg"
+                                className="w-40 h-20 bg-blue-700 rounded-lg flex items-center justify-center mx-auto mb-4 cursor-pointer hover:bg-blue-200 transition duration-300 text-white font-bold text-lg"
                                 onClick={() => router.push("/video-resources")}
                             >
                                 <i className="fas fa-video mb-2"></i>
