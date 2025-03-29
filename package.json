@@ -28,7 +28,7 @@
     "jspdf": "^2.5.1",
     "mongodb": "^6.7.0",
     "mongoose": "^8.8.3",
-    "next": "14.1.4",
+    "next": "14.2.26",
     "nodemailer": "^6.9.13",
     "react": "^18",
     "react-animations": "^1.0.0",
